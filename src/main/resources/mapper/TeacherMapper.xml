@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zyx.study.dao.TeacherMapper">
+
+    <insert id="insertTeacher" parameterType="com.zyx.study.entity.Teacher">
+    insert into student (teacherid, teacherno, teahcername, teacherinstitute, teacherage, teachergender, teacherphone)
+    values (#{teacherid}, #{teacherno}, #{teahcername},#{teacherinstitute}, #{teacherage}, #{teachergender},#{teacherphone})
+    </insert>
+
+    <select id="selectCoursesByNo" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select coursename
+        from courses c, teacher t
+        where t.teachername = c.courseinstructor and t.teacherno = #{no}
+    </select>
+
+    <select id="selectStusByNo" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select s.name, s.no, s.gender, s.institute, s.grade, s.classno, c.coursename
+        from student s, teacher t, courses c, selectcourses sc
+        where sc.courseid = c.courseid and sc.stuno = s.no and t.teachername = c.courseinstructor and t.teacherno = #{no}
+    </select>
+
+    <select id="selectMarksByNo" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select s.name, s.no, c.coursename, m.mark
+        from marks m, teacher t, courses c, selectcourses sc,student s
+        where sc.courseid = c.courseid and sc.stuno = s.no and t.teachername = c.courseinstructor and m.markno = sc.id and t.teacherno = #{no}
+    </select>
+
+</mapper>
+

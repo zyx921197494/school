@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zyx.study.dao.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.zyx.study.entity.Student">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="no" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="institute" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="gender" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="grade" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="classno" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="CourseMap" type="com.zyx.study.entity.Courses">
+        <constructor>
+            <idArg column="courseid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="coursename" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="courseroom" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="courseinstructor" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="starttime"/>
+            <arg column="endtime"/>
+        </constructor>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    id, no, name, institute, gender, phone, grade, classno
+    </sql>
+
+    <insert id="insertStudent" parameterType="com.zyx.study.entity.Student">
+    insert into student (id, no, name, institute, gender, phone, grade, classno)
+    values (#{id}, #{no}, #{name},#{institute}, #{gender}, #{phone},#{grade}, #{classno})
+    </insert>
+
+
+
+
+    <insert id="selectCourses" parameterType="java.util.HashMap">
+        insert into selectcourses (studentname, stuno, courseid, coursename)
+        values(#(select student.name from student where student.no = #{no}), #{no}, #(select selectcourses.courseid from selectcourses,courses where courses.coursename = #{nameList}), #{courseList})
+--         select sc.studentname, sc.stuno, sc.courseid, sc.coursename
+--         from selectcourses sc, student s, courses c
+--         where sc.stuno = #{no} = s.no and c.courseid = sc.courseid and sc.coursename = #{coursesList}
+    </insert>
+
+
+
+
+
+    <delete id="deleteStudentByName" parameterType="java.lang.String">
+        delete from student where name = #{name}
+    </delete>
+
+    <delete id="deleteStudentByNo" parameterType="java.lang.Integer">
+        delete from student where no = #{no}
+    </delete>
+
+    <update id="updateStudentInfoByNo" parameterType="com.zyx.study.entity.Student">
+        update student
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbyType=VARCHAR}
+            </if>
+            <if test="institute != null">
+                institute = #{institute,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null">
+                grade = #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="classno != null">
+                classno = #{classno,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where no = #{no,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectStudentByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        where name = #{name,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectStudentByNo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        where no = #{no}
+    </select>
+
+    <select id="selectStudentsByClass" resultType="java.util.HashMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        where classno = #{classno}
+    </select>
+
+    <select id="selectStudentsByGrade" resultType="java.util.HashMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        where grade = #{grade}
+    </select>
+
+    <select id="selectCoursesByStuNo" resultType="java.util.HashMap" parameterType="java.lang.Integer">
+        select c.coursename, c.courseroom, c.courseinstructor, c.starttime, c.endtime
+        from student s,courses c,selectcourses sc
+        where c.courseid = sc.courseid and sc.stuno = s.no and sc.stuno = #{no}
+    </select>
+
+    <select id="selectMarksByStuNo" resultType="java.util.HashMap" parameterType="java.lang.Integer">
+        select c.coursename, m.mark
+        from marks m, selectcourses sc, courses c
+        where c.courseid = sc.courseid and m.markno = sc.id and sc.stuno = #{no}
+    </select>
+
+
+</mapper>
