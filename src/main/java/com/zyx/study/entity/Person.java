@@ -1,6 +1,12 @@
 package com.zyx.study.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 //@Entity
 public class Person {
@@ -77,11 +83,15 @@ public class Person {
                 '}';
     }
 
+    @Id
     protected Integer id;
+    @NotNull
     protected Integer no;
+    @NotEmpty
     protected String name;
     protected String institute;
     protected String gender;
+    @Length(min = 7,max = 11)
     protected String phone;
 
 }

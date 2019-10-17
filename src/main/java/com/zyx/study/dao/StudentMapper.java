@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ public interface StudentMapper {
 
     List<Student> selectStudentsByClass(@Param("classno") String classNo);
 
-    List<Student> selectStudentsByGrade(@Param("grade") String grade);
+    List<Student> selectStudentsByGrade(@Param("grade") String  grade);
 
     Student selectStudentByName(String name);
 
@@ -43,9 +42,7 @@ public interface StudentMapper {
 
     //学生选课
 
-//    int selectCourses(Integer no, List<String> coursesList);
-
-//    int selectCourses(Map<String, Object> map);
-
     int selectCourses(Integer no, String coursename);
+
+
 }

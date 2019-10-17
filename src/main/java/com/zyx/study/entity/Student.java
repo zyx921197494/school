@@ -1,6 +1,7 @@
 package com.zyx.study.entity;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * @author zyx
@@ -39,6 +40,9 @@ public class Student extends Person {
         this.classno = classNo;
     }
 
+    @NotEmpty
     private String grade;
+    @NotEmpty
     private String classno;
+
 }

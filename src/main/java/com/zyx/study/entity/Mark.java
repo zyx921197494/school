@@ -1,5 +1,8 @@
 package com.zyx.study.entity;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class Mark {
     public Integer getId() {
         return id;
@@ -43,7 +46,10 @@ public class Mark {
         this.mark = mark;
     }
 
+    @NotNull
     private Integer id;
+    @NotNull
     private Integer markno;
+    @NotEmpty
     private String mark;
 }

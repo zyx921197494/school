@@ -1,6 +1,8 @@
 package com.zyx.study.entity;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 //@Entity
 public class Courses {
@@ -76,11 +78,17 @@ public class Courses {
                 '}';
     }
 
+    @NotNull
     private Integer courseid;
+    @NotEmpty(message = "课程名不能为空")
     private String cousename;
+    @NotEmpty(message = "教室不能为空")
     private String courseroom;
+    @NotEmpty(message = "授课教师不能为空")
     private String courseinstructor;
+    @NotEmpty(message = "上课时间不能为空")
     private String starttime;
+    @NotEmpty(message = "下课时间不能为空")
     private String endtime;
 
 }
