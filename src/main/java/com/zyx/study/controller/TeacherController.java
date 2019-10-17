@@ -6,20 +6,19 @@ import com.zyx.study.entity.Mark;
 import com.zyx.study.entity.Student;
 import com.zyx.study.exception.ErrorArgumentException;
 import com.zyx.study.exception.ResultNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-
+@Validated
 @Controller
 @ResponseBody
-@RequestMapping("teacher")
+@RequestMapping("/teacher")
 public class TeacherController {
 
     @Resource
